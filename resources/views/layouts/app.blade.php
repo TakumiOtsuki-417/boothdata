@@ -21,6 +21,9 @@
 
             @yield('content')
         </div>
-
+        
+        <footer class="border-t border-gray-700 border-opacity-50 text-center mt-10">
+            &copy;ブース管理アプリ
+        </footer>
     </body>
 </html>

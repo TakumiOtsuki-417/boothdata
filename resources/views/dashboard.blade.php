@@ -2,11 +2,34 @@
 
 @section('content')
     @if (Auth::check())
-        <div class="sm:grid sm:grid-cols-3 sm:gap-10">
+        @include('commons.floor_tabs')
+        <div class="w-full overflow-x-scroll">
             {{-- 投稿一覧ひとまず --}}
-            @if(isset($posts))
-                @forEach ($posts as $post)
-                    <p>{{ $post->datetime }}</p>
+            @if(isset($posts) && count($posts)>=1)
+                @forEach ($posts as $post => $contents)
+                <p>{{ $booths[$post]['name'] }}</p>
+                <table class="table table-compact w-full sm:overflow-x-scroll">
+                    <thead>
+                        <tr>
+                            <th class="text-center">作業日時</th>
+                            <th class="text-center">ブース名</th>
+                            <th class="text-center">残量1</th>
+                            <th class="text-center">残量2</th>
+                            <th class="text-center">担当</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forEach($contents as $content)
+                        <tr>
+                            <td>{{ $content->datetime }}</td>
+                            <td>{{ $booths[$content->booth_id]['name'] }}</td>
+                            <td class="text-right">{{ $content->before_paper }}</td>
+                            <td class="text-right">{{ $content->after_paper }}</td>
+                            <td>{{ $content->user->name }}</td>
+                        </tr>
+                        @endforEach
+                    </tbody>
+                </table>
                 @endforEach
             @else
                 <p>まだデータはありません</p>

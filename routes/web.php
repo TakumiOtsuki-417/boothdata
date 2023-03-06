@@ -22,6 +22,7 @@ Route::get('/dashboard', [PostsController::class, 'index'])->middleware(['auth']
 
 Route::middleware('auth')->group(function () {
     Route::resource('posts', PostsController::class, ['only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']]);
+    Route::post('/posts_floor', [PostsController::class, 'floor'])->name('posts.floor');
 });
 
 require __DIR__.'/auth.php';

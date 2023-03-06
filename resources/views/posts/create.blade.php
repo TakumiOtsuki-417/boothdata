@@ -15,7 +15,7 @@
                     <select name="booth_id" class="select select-bordered w-full max-w-xs">
                         <option disabled selected>ブースを選ぶ</option>
                         @for($i = 0; $i < 51; $i++)
-                            <option value={{ $i }}>{{ $booths[$i] }}</option>
+                            <option value={{ $i }}>{{ $booths[$i]['name'] }}</option>
                         @endfor
                     </select>
                 </div>

@@ -14,10 +14,24 @@ class PostsController extends Controller
     public function index()
     {
         $data = [];
-        $posts = Post::all();
+        $booths = Post::BOOTHS;
+        $today = Carbon::now();
+        $weekago = $today->subDay(6);
+        $posts = Post::where('datetime', '>=', $weekago)->orderBy('datetime', 'desc')->get()->groupBy('booth_id');
+
+        
+        // floor用ボタン作成準備（全フロアカテゴリの文字列取得）
+        $floor_tabs = [];
+        forEach($booths as $booth){
+            if(!in_array($booth['floor'], $floor_tabs)){
+                $floor_tabs[] = $booth['floor'];
+            }
+        }
+
         $data = [
             'posts'=>$posts,
-            'booths'=>Post::BOOTHS,
+            'booths'=>$booths,
+            'floor_tabs'=>$floor_tabs,
         ];
         // dashboardビューでそれらを表示
         return view('dashboard', $data);
@@ -37,7 +51,7 @@ class PostsController extends Controller
         // バリデーション
         $request->validate([
             'booth_id' => 'required|numeric',
-            'datetime' => 'required|date_format',
+            'datetime' => 'required',
             'before_paper' => 'required|numeric|between:0,200',
             'after_paper' => 'required|numeric|between:0,200',
         ]);
@@ -53,6 +67,48 @@ class PostsController extends Controller
         
         // 前のURLへリダイレクトさせる
         return back();
+    }
+    public function floor(Request $request)
+    {
         
+        // リクエストに必ず指定floorが入っている
+        if(!$request->floor_tab) {
+            return redirect('/');
+        }
+        $floor = $request->floor_tab;
+        $floor_booths = [];
+        $data = [];
+        $booths = Post::BOOTHS;
+        $today = Carbon::now();
+        $weekago = $today->subDay(6);
+
+        // フロア該当のbooth_idを抽出
+        forEach($booths as $booth){
+            if($booth['floor'] == $floor){
+                $floor_booths[] = $booth['id'];
+            }
+        }
+        // 該当するブースデータを検索
+        $posts = Post::whereIn('booth_id', $floor_booths)
+        ->where('datetime', '>=', $weekago)
+        ->orderBy('datetime', 'desc')->get()
+        ->groupBy('booth_id');
+
+        // floor用ボタン作成準備（全フロアカテゴリの文字列取得）
+        $floor_tabs = [];
+        forEach($booths as $booth){
+            if(!in_array($booth['floor'], $floor_tabs)){
+                $floor_tabs[] = $booth['floor'];
+            }
+        }
+        
+        $data = [
+            'posts'=>$posts,
+            'booths'=>Post::BOOTHS,
+            'floor_tabs' => $floor_tabs,
+        ];
+        // dashboardビューでそれらを表示
+        return view('dashboard', $data);
+
     }
 }
