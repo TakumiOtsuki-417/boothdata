@@ -16,6 +16,12 @@ class Post extends Model
         'after_paper',
         'user_id',
     ];
+    
+    // datetimeをdatetime型として取り出す
+    protected $dates = [
+        'datetime',
+    ];
+
 
     /**
      * この投稿を所有するユーザ。（ Userモデルとの関係を定義）

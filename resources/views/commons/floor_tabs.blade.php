@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('posts.floor') }}" class="flex w-full justify-center">
+<form method="POST" action="{{ route('posts.floor') }}" class="flex w-full gap-x-4 md:justify-center lg:justify-center sm:justify-left overflow-x-scroll md:overflow-x-auto">
 @csrf
 @forEach($floor_tabs as $floor_tab)
     <button type="submit" name="floor_tab" value="{{ $floor_tab }}" 
