@@ -11,12 +11,14 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+// 管理者ユーザーのみがユーザー登録できる流れを設定
 Route::get('/register', [RegisteredUserController::class, 'create'])
                 ->middleware(['auth', 'admin'])
                 ->name('register');
-
+Route::post('register', [RegisteredUserController::class, 'store'])
+                ->middleware(['auth', 'admin']);
+                
 Route::middleware('guest')->group(function () {
-    Route::post('register', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
