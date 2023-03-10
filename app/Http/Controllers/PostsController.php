@@ -17,7 +17,7 @@ class PostsController extends Controller
         $user = Auth::user();
         $booths = Post::BOOTHS;
         $today = Carbon::now();
-        $weekago = $today->subDay(6);
+        $weekago = $today->subDay(30);
         $posts = Post::where('datetime', '>=', $weekago)->orderBy('datetime', 'desc')->get()->groupBy('booth_id');
 
         
@@ -127,7 +127,7 @@ class PostsController extends Controller
         $user = Auth::user();
         $booths = Post::BOOTHS;
         $today = Carbon::now();
-        $weekago = $today->subDay(6);
+        $weekago = $today->subDay(30);
 
         // フロア該当のbooth_idを抽出
         forEach($booths as $booth){
