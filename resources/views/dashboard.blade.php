@@ -45,7 +45,7 @@
             </div>
                 @endforEach
             @else
-                <div>
+                <div class="flex justify-center w-full my-8">
                     <p>まだデータはありません</p>
                 </div>
             @endif
