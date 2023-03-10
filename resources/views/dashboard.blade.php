@@ -6,12 +6,12 @@
             {{-- 投稿一覧 --}}
             @if(isset($posts) && count($posts)>=1)
                 @forEach ($posts as $post => $contents)
-                <div class="w-full max-w-3xl py-10 mx-auto overflow-x-scroll">
+                <div class="w-full max-w-3xl py-10 mx-auto overflow-x-scroll md:overflow-x-auto">
                 <table class="table table-compact w-full mb-10">
                     <caption class="text-left font-bold text-xl">{{ $booths[$post]['name'] }}</caption>
                     <thead>
                         <tr>
-                            <th class="text-center w-3/12 relative">作業日時</th>
+                            <th class="text-center w-3/12 style-sticky-cancel">作業日時</th>
                             <th class="text-center w-3/12">残量1</th>
                             <th class="text-center w-3/12">残量2</th>
                             <th class="text-center w-3/12">担当</th>
@@ -26,15 +26,15 @@
                             <td>{{ $content->datetime }}</td>
                             <td class="text-center">{{ $content->before_paper }}</td>
                             <td class="text-center">{{ $content->after_paper }}</td>
-                            <td>{{ $content->user->name }}</td>
+                            <td>{{ $content->user->name }}({{ $content->user->position }})</td>
                             @if($user->is_admin == true)
-                                <td>
-                                    <a class="" href="{{ route('posts.edit', $content->id) }}">編集</a>
+                                <td class="flex gap-4">
+                                    <a class="text-sky-500" href="{{ route('posts.edit', $content->id) }}">編集</a>
                                     {{-- メッセージ削除フォーム --}}
                                     <form method="POST" action="{{ route('posts.destroy', $content->id) }}">
                                     @csrf
                                     @method('DELETE')
-                                        <button type="submit" onclick="return confirm('削除します。よろしいですか？')">削除</button>
+                                        <button class="text-red-500" type="submit" onclick="return confirm('削除します。よろしいですか？')">削除</button>
                                     </form>
                                 </td>
                             @endif

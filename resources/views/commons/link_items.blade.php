@@ -1,6 +1,6 @@
 @if (Auth::check())
     <li><a class="link link-hover" href="{{ route('posts.create') }}">データ作成</a></li>
-    <li class="divider lg:hidden"></li>
+    <!--<li class="divider lg:hidden"></li>-->
     {{-- スタッフ登録へのリンク（管理者のみ） --}}
     @if(Auth::user()->is_admin == true)
         <li><a class="link link-hover" href="{{ route('register') }}">スタッフ登録</a></li>
