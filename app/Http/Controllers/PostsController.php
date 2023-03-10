@@ -118,7 +118,7 @@ class PostsController extends Controller
     {
         
         // リクエストに必ず指定floorが入っている
-        if(!$request->floor_tab) {
+        if(!$request->has('floor_tab')) {
             return redirect('/');
         }
         $floor = $request->floor_tab;
