@@ -60,7 +60,7 @@ class UsersController extends Controller
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'position' => $request->position,
-                'is_admin' => false
+                'is_admin' => $user->is_admin,
             ]);
             return redirect('users');
         }else{
