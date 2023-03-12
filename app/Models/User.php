@@ -48,5 +48,16 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+    
+    // positionを定数として登録
+    const POSITIONS = [
+        ['id'=>0, 'name'=>'W朝巡回A'],
+        ['id'=>1, 'name'=>'W朝巡回B'],
+        ['id'=>2, 'name'=>'W昼巡回'],
+        ['id'=>3, 'name'=>'M朝巡回'],
+        ['id'=>4, 'name'=>'M昼巡回'],
+        ['id'=>5, 'name'=>'W夜巡回'],
+        ['id'=>6, 'name'=>'M夜巡回'],
+    ];
 
 }

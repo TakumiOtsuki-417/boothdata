@@ -25,4 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/posts_floor', [PostsController::class, 'floor'])->name('posts.floor');
 });
 
+Route::middleware(['auth', 'admin'])->group(function() {
+   Route::resource('users', UsersController::class, ['only' => ['index', 'edit', 'update', 'destroy']]); 
+});
+
 require __DIR__.'/auth.php';
